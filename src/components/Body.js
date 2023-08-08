@@ -14,9 +14,14 @@ const RestaurantCard = ({card}) => {
   );
 };
 
+const filterData=(searchText,restaurants)=>{
+   const filteredData=restaurants.filter(rest=>rest.name.includes(searchText));
+   return filteredData;
+}
 
 
 const Body = () => {
+    const [restaurants,setRestaurants]=useState(restaurantList);
     const [searchText,setSearchText]=useState("");
   return (
 
@@ -24,11 +29,14 @@ const Body = () => {
         <input type="text" className="search-restaurant" placeholder="Search Restaurant" value={searchText}
         onChange={e=>setSearchText(e.target.value)}
         >
-        </input>
+        </input><button onClick={()=>{
+          const data=filterData(searchText,restaurants);
+          setRestaurants(data);
+        }}>Search</button>
     <div className="card-container">
 
         {
-            restaurantList.map(restaurant=><RestaurantCard card={restaurant} />)
+            restaurants.map(restaurant=><RestaurantCard card={restaurant} />)
         }
 
     
