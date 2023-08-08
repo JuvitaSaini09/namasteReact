@@ -23,6 +23,8 @@ const filterData=(searchText,restaurants)=>{
 const Body = () => {
     const [restaurants,setRestaurants]=useState(restaurantList);
     const [searchText,setSearchText]=useState("");
+    const [title,setTitle]=useState("title");
+    console.log("render");
   return (
 
     <div>
@@ -33,6 +35,8 @@ const Body = () => {
           const data=filterData(searchText,restaurants);
           setRestaurants(data);
         }}>Search</button>
+        <button onClick={()=>setTitle("newTitle")}>Update title</button>
+        <h1>{title}</h1>
     <div className="card-container">
 
         {
