@@ -1,15 +1,16 @@
 import { restaurantList,IMG_CDN } from "../config";
-import {useState} from "react";
+import {useState,useEffect} from "react";
 
 
 const RestaurantCard = ({card}) => {
+
    const {cloudinaryImageId,name,cuisines,avgRating}=card;
   return (
     <div className="card">
-      <img src={IMG_CDN+cloudinaryImageId} alt="card" />
+       <img src={IMG_CDN+cloudinaryImageId} alt="card" />
       <h2>{name}</h2>
       <h3>{cuisines.join(", ")}</h3>
-      <h4>{avgRating} stars</h4>
+      <h4>{avgRating} stars</h4> 
     </div>
   );
 };
@@ -20,11 +21,28 @@ const filterData=(searchText,restaurants)=>{
 }
 
 
+
+
+
 const Body = () => {
     const [restaurants,setRestaurants]=useState(restaurantList);
     const [searchText,setSearchText]=useState("");
     const [title,setTitle]=useState("title");
     console.log("render");
+
+
+    async function getRestaurants(){
+  // const response=await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5912716&lng=73.73890899999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+  const response=await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5204303&lng=73.8567437&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+  const jsonData=await response.json();
+  setRestaurants(jsonData?.data.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+
+//info.avgRating, info.cloudinaryImageId, info.cuisines, info.name
+
+
+}
+
+    useEffect(getRestaurants,[searchText])
   return (
 
     <div>
@@ -40,7 +58,7 @@ const Body = () => {
     <div className="card-container">
 
         {
-            restaurants.map(restaurant=><RestaurantCard card={restaurant} />)
+            restaurants.map(restaurant=><RestaurantCard card={restaurant.info} />)
         }
 
     
