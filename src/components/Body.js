@@ -15,7 +15,6 @@ const RestaurantCard = ({ card }) => {
 };
 
 const filterData = (searchText, restaurants) => {
-  console.log("here", restaurants);
   const filteredData = restaurants.filter((rest) =>
     rest.info.name.toLowerCase().includes(searchText.toLowerCase())
   );

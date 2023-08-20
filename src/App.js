@@ -7,6 +7,46 @@ import About from "./components/About"
 import Error from "./components/Error";
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
 
+const AppLayout=()=>{
+  return (
+    <>
+      <Header />
+      <Body />
+      <Footer />
+    </>
+
+  )
+}
+
+
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const router=createBrowserRouter(
+  [
+    {
+      path:"/",
+      element:<AppLayout />,
+      errorElement:<Error />
+
+    },
+    {
+      path:"/about",
+      element:<About />,
+      errorElement:<Error />
+    }
+  ]
+)
+
+
+root.render(<RouterProvider router={router} />)
+
+
+
+
+
+
+
 
 
 
@@ -45,36 +85,3 @@ import { createBrowserRouter,RouterProvider } from "react-router-dom";
 // }
 
 /*---------New Code -----------*/
-const AppLayout=()=>{
-  return (
-    <>
-      <Header />
-      <Body />
-      <Footer />
-    </>
-
-  )
-}
-
-
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-
-const router=createBrowserRouter(
-  [
-    {
-      path:"/",
-      element:<AppLayout />,
-      errorElement:<Error />
-
-    },
-    {
-      path:"/about",
-      element:<About />,
-      errorElement:<Error />
-    }
-  ]
-)
-
-
-root.render(<RouterProvider router={router} />)
