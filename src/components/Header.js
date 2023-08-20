@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import Logo from "../assets/img/logo.png"
+import {Link} from "react-router-dom"
 
 const Header = () => {
   const [isLoggedIn,setIsLoggedIn]=useState(false);
@@ -10,25 +11,30 @@ const Header = () => {
         src={Logo}
         alt="logo"
       />
+
       <ul className="navbar">
-        <a href="#">
+        <Link to="/">
           <li>Home</li>
-        </a>
-        <a href="#">
+        </Link>
+
+        <Link to="/about">
           <li>About</li>
-        </a>
-        <a href="#">
+        </Link>
+
+        <Link to="/" >
           <li>Contact</li>
-        </a>
-        <a href="#">
+        </Link>
+
+        <Link to="/" >
           <li>Cart</li>
-        </a>
+        </Link>
         {
           isLoggedIn 
           ?<button onClick={()=>setIsLoggedIn(false)}>Logout</button>
           :<button onClick={()=>setIsLoggedIn(true)}>Login</button>
         }
      </ul>
+     <Link to="/about">Go to about Page</Link>
     </div>
   );
 }
