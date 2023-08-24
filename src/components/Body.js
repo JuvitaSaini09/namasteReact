@@ -25,30 +25,70 @@ const Body = () => {
   const [allRestaurants, setAllRestaurants] = useState([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [title, setTitle] = useState("title");
+  const [title, setTitle] = useState("title")
   console.log("render");
 
-  async function getRestaurants() {
-    // const response=await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5912716&lng=73.73890899999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
-    const response = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5204303&lng=73.8567437&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
-    const jsonData = await response.json();
-    setFilteredRestaurants(
-      jsonData?.data.cards[2]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants
-    );
-    setAllRestaurants(
-      jsonData?.data.cards[2]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants
-    );
+ 
+  
+  // async function getRestaurants() {
+  //   // const response=await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5912716&lng=73.73890899999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+  //   const response = await fetch(
+  //     "https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5204303&lng=73.8567437&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+  //   );
+  //   const jsonData = await response.json();
+  //   setFilteredRestaurants(
+  //     jsonData?.data.cards[2]?.card?.card?.gridElements?.infoWithStyle
+  //       ?.restaurants
+  //   );
+  //   setAllRestaurants(
+  //     jsonData?.data.cards[2]?.card?.card?.gridElements?.infoWithStyle
+  //       ?.restaurants
+  //   );
 
-    //info.avgRating, info.cloudinaryImageId, info.cuisines, info.name
+  //   //info.avgRating, info.cloudinaryImageId, info.cuisines, info.name
+  // }
+
+  // useEffect(getRestaurants, []);
+
+
+  const abortController = new AbortController();
+  const signal = abortController.signal;
+
+  async function getRestaurants() {
+    try {
+      const response = await fetch(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5204303&lng=73.8567437&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
+        { signal } // Pass the signal to the fetch to allow cancellation
+      );
+      const jsonData = await response.json();
+      setFilteredRestaurants(
+        jsonData?.data.cards[2]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+      setAllRestaurants(
+        jsonData?.data.cards[2]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+    } catch (error) {
+      // Handle any fetch errors here
+    }
   }
 
-  useEffect(getRestaurants, []);
+  useEffect(() => {
+    getRestaurants();
+
+    // Cleanup function to cancel ongoing fetch if component unmounts
+    return () => {
+      abortController.abort();
+    };
+  }, []);
+
+
+
+
 
   if (!allRestaurants) return null; // stop render (This is Called as Early return)
+  
   return allRestaurants.length == 0 ? (
     <ShimmerUI />
   ) : (
