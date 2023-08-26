@@ -1,16 +1,20 @@
 import { IMG_CDN } from "../config";
 import { useState, useEffect } from "react";
 import ShimmerUI from "./ShimmerUI";
+import {Link} from "react-router-dom"
 
 const RestaurantCard = ({ card }) => {
+
   const { cloudinaryImageId, name, cuisines, avgRating } = card;
   return (
+    <Link to={"/restaurant/"+card.id} key={card.id}>
     <div className="card">
       <img src={IMG_CDN + cloudinaryImageId} alt="card" />
       <h2>{name}</h2>
       <h3>{cuisines.join(", ")}</h3>
       <h4>{avgRating} stars</h4>
     </div>
+    </Link>
   );
 };
 
@@ -119,6 +123,7 @@ const Body = () => {
           <h1>No Restaurant Found !!</h1>
         ) : (
           filteredRestaurants.map((restaurant) => (
+        
             <RestaurantCard card={restaurant.info} />
           ))
         )}
