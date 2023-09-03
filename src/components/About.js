@@ -2,6 +2,7 @@ import React from "react"
 import {Link} from "react-router-dom"
 import {Outlet} from "react-router-dom"
 import ProfileClass from "./ProfileClass"
+import ProfileFunctionalComponent from "./Profile"
 
 
 // const About2=()=>{
@@ -29,7 +30,7 @@ class About extends React.Component{
   }
 
   componentDidMount(){
-    // console.log("Parent componentDidMount");
+    this.timer=setInterval(()=>{ console.log("Sri Ram") },1000)
   }
   componentDidUpdate(prevProps,prevState){
     console.log("hi, am component did update !!",prevProps,prevState)
@@ -37,6 +38,7 @@ class About extends React.Component{
 
   componentWillUnmount(){
     console.log("bye bye !! component unmounted !!")
+    clearInterval(this.timer)
   }
 
   render(){
@@ -48,7 +50,7 @@ class About extends React.Component{
     <Link to="/">Go to Home Page</Link>
     <Outlet />
     <ProfileClass name={"Juvita"}  child={"first child"}/>
-    {/* <ProfileFunctionalComponent name={"Juvita"} /> */}
+     <ProfileFunctionalComponent name={"Juvita"} /> 
    
     <Link to="profile" >Profile</Link>
     <p>counter : {this.state.counter}</p>

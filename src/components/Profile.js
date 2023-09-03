@@ -1,8 +1,20 @@
-import {useState} from "react";
+import {useState,useEffect} from "react";
 
 const Profile=(props)=>{
     const {name}=props;
     const [count,setCount]=useState(0);
+    useEffect(()=>{
+        const timer=setInterval(()=>{
+            console.log("useEffect set Interval");
+        },1000)
+
+
+        return()=>{
+           clearInterval(timer)
+    }
+    }
+    
+    ,[])
     return (
         <div>
             <h1>Profile Functional component Page</h1>
