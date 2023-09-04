@@ -28,6 +28,11 @@ const Header = () => {
         <Link to="/" >
           <li>Cart</li>
         </Link>
+
+       <Link to="/instamart" >
+          <li>Instamart</li>
+        </Link>
+
         {
           isLoggedIn 
           ?<button onClick={()=>setIsLoggedIn(false)}>Logout</button>
