@@ -21,7 +21,7 @@ const RestaurantCard = ({ card }) => {
 };
 
 const Body = () => {
-  const [allRestaurants, filteredRestaurants] = useRestaurants(); //useRestaurants return array
+  const [allRestaurants, filteredRestaurants,setFilteredRestaurants] = useRestaurants(); //useRestaurants return array
   const [searchText, setSearchText] = useState("");
   const [title, setTitle] = useState("title");
 

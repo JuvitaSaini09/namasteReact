@@ -40,7 +40,7 @@ const useRestaurants=()=>{
 
 
     //return
-    return [allRestaurants,filteredRestaurants];
+    return [allRestaurants,filteredRestaurants,setFilteredRestaurants];
 }
 
 export default useRestaurants;
