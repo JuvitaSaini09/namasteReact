@@ -4,6 +4,7 @@ import ShimmerUI from "./ShimmerUI";
 import { Link } from "react-router-dom";
 import { filterData } from "./utils/helper";
 import useRestaurants from "./utils/useRestaurants";
+import useOnline from "./utils/useOnline"
 
 const RestaurantCard = ({ card }) => {
   const { cloudinaryImageId, name, cuisines, avgRating } = card;
@@ -23,6 +24,10 @@ const Body = () => {
   const [allRestaurants, filteredRestaurants] = useRestaurants(); //useRestaurants return array
   const [searchText, setSearchText] = useState("");
   const [title, setTitle] = useState("title");
+
+  const isOnline=useOnline();
+  
+  if(!isOnline) return <h1 style={{color:"red"}}>OOPS!! Check your internet connection !!</h1>
 
   if (!allRestaurants) return null; // stop render (This is Called as Early return)
 
