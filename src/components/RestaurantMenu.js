@@ -1,37 +1,15 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IMG_CDN } from "../config";
 import ShimmerUI from "./ShimmerUI";
+import useRestaurant from "./utils/useRestaurant";
 
 const RestaurantMenu = () => {
   const { id } = useParams();
-  const [restaurantDetail, setRestaurantDetail] = useState(null);
-  const [recommendation, setRecommendation] = useState([]);
+  const [restaurantDetail, recommendation] = useRestaurant(id);
 
-  useEffect(() => {
-    const getRestaurant = async () => {
-      const response = await fetch(
-        "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=18.5204303&lng=73.8567437&restaurantId=" +
-          id +
-          "&catalog_qa=undefined&submitAction=ENTER"
-      );
-
-      const jsonResponse = await response.json();
-      const restaurantDetail = jsonResponse.data;
-
-      setRecommendation(
-        restaurantDetail.cards[2].groupedCard.cardGroupMap.REGULAR.cards[2].card
-          .card.itemCards
-      );
-      
-      setRestaurantDetail(restaurantDetail.cards[0].card.card.info);
-    };
-    getRestaurant();
-  }, []);
-
-  
-
-  return (!restaurantDetail)?<ShimmerUI /> :(
+  return !restaurantDetail ? (
+    <ShimmerUI />
+  ) : (
     <div className="menu">
       <div>
         <h1>Resturant id : {restaurantDetail.id}</h1>
